@@ -36,6 +36,17 @@ function App() {
     }
   }, [events]);
 
+  const renameEvent = useCallback((oldTitle, newTitle) => {
+    setEvents((prevEvents) => {
+      return prevEvents.map((event) => {
+        if (event.title === oldTitle) {
+          return { ...event, title: newTitle };
+        }
+        return event;
+      });
+    });
+  }, []);
+
   // Set localStorage
   useEffect(() => {
     updateEvents();
@@ -48,6 +59,7 @@ function App() {
         setEvents={setEvents}
         currentEvent={currentEvent}
         setCurrentEvent={setCurrentEvent}
+        renameEvent={renameEvent}
       />
       <TaskBox
         events={events}
