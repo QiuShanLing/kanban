@@ -5,7 +5,11 @@ const EventBar = ({ events, setEvents, currentEvent, setCurrentEvent }) => {
   const handleAdd = useCallback(() => {
     const title = prompt('Enter the Title:');
     // Prevent Duplicated
-    if (
+    if (events===null) {
+      alert('Event is not null');
+      return;
+    }
+    else if (
       events.find((event) => event.title.toLowerCase() === title.toLowerCase())
     ) {
       alert('Event Already Existed');
