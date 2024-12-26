@@ -89,6 +89,7 @@ const Column = ({ tag, currentEvent, events, setEvents }) => {
                       {(provided, snapshot) => (
                           <Task
                             name={item.name}
+                            status = {tag}
                             details={item.details}
                             id={item.id}
                             provided={provided}

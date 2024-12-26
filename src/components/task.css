@@ -39,7 +39,7 @@
 }
 
 .column {
-  width: 300px;
+  width: 400px;
   max-height: 700px;
   background-color: #f6f9fa;
   border-radius: 15px;
@@ -51,7 +51,7 @@
 }
 
 .add-task-button {
-  width: 300px;
+  width: 400px;
   height: 40px;
   font-size: 1.3em;
   line-height: 40px;
@@ -92,6 +92,30 @@
   user-select: none;
   border: 1px solid #ccc;
   outline: none;
+}
+
+.task-todo .task-name::before {
+  content: '●';
+  font-style: normal;
+  color: rgb(247, 231, 9);
+  margin-right: 10px;
+  font-size: 1.5em;
+}
+
+.task-in-progress .task-name::before {
+  content: '●';
+  font-style: normal;
+  color: rgb(241, 47, 22);
+  margin-right: 10px;
+  font-size: 1.5em; /* 修改content的大小 */
+}
+
+.task-completed .task-name::before {
+  content: '●';
+  font-style: normal;
+  color: rgb(91, 226, 91);
+  margin-right: 10px;
+  font-size: 1.5em;
 }
 
 .task:hover {
