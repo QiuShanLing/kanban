@@ -76,11 +76,13 @@
   min-height: 30px;
   max-height: 600px;
   overflow: auto;
+  overflow: hidden; /* 移除滚动条 */
 }
 
 .task {
   position: relative;
   width: calc(100% - 33px);
+  height: 90px;
   background-color: #fff;
   padding: 15px;
   border-radius: 10px;
