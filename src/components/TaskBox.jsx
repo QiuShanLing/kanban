@@ -57,7 +57,7 @@ const TaskBox = ({ events, setEvents, currentEvent, setCurrentEvent }) => {
   return (
     <div className='task-box'>
       <header className='task-box-header'>
-        <h1 className='task-box-title'>All Tasks</h1>
+        <h1 className='task-box-title'>{currentEvent.title}</h1>
         <button className='remove-button' onClick={handleRemove}>
           Remove this Event
         </button>
