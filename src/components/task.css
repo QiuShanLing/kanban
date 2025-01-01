@@ -40,7 +40,8 @@
 
 .column {
   width: 400px;
-  max-height: 700px;
+  min-height:90px;
+  max-height: 1000px;
   background-color: #f6f9fa;
   border-radius: 15px;
   padding: 17px 25px;
@@ -163,4 +164,17 @@
   font-size: 8em;
   line-height: 0.01em;
   transition: 0.5s;
+}
+
+.task-time {
+  background-color: #ec3608;
+  border-radius: 5px; /* 所有角都设置为圆角 */
+  display: flex;
+  justify-content: center; /* 水平居中 */
+  align-items: center; /* 垂直居中 */
+  height: 30px; /* 设置高度 */
+  font-style: normal;
+  font-size: 0.8em;
+  color: #0019fc;
+  margin-top: 4px;
 }

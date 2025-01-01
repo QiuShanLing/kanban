@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import AddTaskButton from './AddTaskButton';
 import Task from './Task';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
@@ -6,24 +7,29 @@ import uuid from 'react-uuid';
 const Column = ({ tag, currentEvent, events, setEvents }) => {
   const handleAdd = () => {
     const name = prompt('Enter task name:');
-    const details = prompt('Enter details:');
-    if (!(name && details)) return;
-    setEvents((prev) => {
-      const arrCopy = [...prev];
-      const index = prev.findIndex(
-        (event) => event.title === currentEvent.title
-      );
-      const eventCopy = arrCopy[index];
-      // Remove old and add the latest data
-      arrCopy.splice(index, 1, {
-        ...eventCopy,
-        [tag]: [
-          ...eventCopy[tag],
-          { name: name, id: uuid(), details: details },
-        ],
-      });
-      return arrCopy;
-    });
+    if (!name) return;
+    
+    const details = prompt('Enter task details (optional):');
+    const startTime = prompt('Enter start date (YYYY-MM-DD, optional):');
+    const endTime = prompt('Enter end date (YYYY-MM-DD, optional):');
+    
+    setEvents(prev =>
+      prev.map(event => {
+        if (event.title === currentEvent.title) {
+          return {
+            ...event,
+            [tag]: [...event[tag], {
+              id: Date.now().toString(),
+              name,
+              details: details || '',
+              startTime: startTime || null,
+              endTime: endTime || null,
+            }]
+          };
+        }
+        return event;
+      })
+    );
   };
 
   const handleRemove = (id, e) => {
@@ -43,25 +49,36 @@ const Column = ({ tag, currentEvent, events, setEvents }) => {
     );
   };
 
-  const handleUpdate = (id) => {
-    const name = prompt('Update task name:');
-    const details = prompt('Update details:');
-    if (!(name && details)) return;
-    setEvents((prev) =>
-      prev.map((event) => {
+  const handleUpdate = (taskId) => {
+    const taskToUpdate = currentEvent[tag].find(task => task.id === taskId);
+    if (!taskToUpdate) return;
+
+    const name = prompt('Update task name:', taskToUpdate.name);
+    if (!name) return;
+    
+    const details = prompt('Update task details:', taskToUpdate.details);
+    const startTime = prompt('Update start date (YYYY-MM-DD):', taskToUpdate.startTime);
+    const endTime = prompt('Update end date (YYYY-MM-DD):', taskToUpdate.endTime);
+
+    setEvents(prev =>
+      prev.map(event => {
         if (event.title === currentEvent.title) {
-          const taskList = event[tag];
-          const index = taskList.findIndex((item) => item.id === id);
-          const updatedTask = {
-            ...taskList[index],
-            name,
-            details,
+          return {
+            ...event,
+            [tag]: event[tag].map(task => 
+              task.id === taskId
+                ? {
+                    ...task,
+                    name,
+                    details: details || '',
+                    startTime: startTime || null,
+                    endTime: endTime || null,
+                  }
+                : task
+            )
           };
-          taskList.splice(index, 1);
-          return { ...event, [tag]: [...taskList, updatedTask] };
-        } else {
-          return event;
         }
+        return event;
       })
     );
   };
@@ -91,6 +108,8 @@ const Column = ({ tag, currentEvent, events, setEvents }) => {
                             name={item.name}
                             status = {tag}
                             details={item.details}
+                            startTime={item.startTime}
+                            endTime={item.endTime}
                             id={item.id}
                             provided={provided}
                             snapshot={snapshot}
